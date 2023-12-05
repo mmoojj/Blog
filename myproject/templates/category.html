@@ -1,0 +1,56 @@
+<!-- Main Content-->
+{% extends "base.html" %}
+{% load static %}
+{% load base_tags %}
+{% load humanize %}
+{% block header %}{% static "/blog/assets/img/home-bg.jpg" %}{% endblock %}
+{% block htitle %} سیلیسیوم {% endblock %}
+{% block main %}
+
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-4 " >
+            {% popular_article %}
+            {% popular_rating_article %}
+          </div>
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            
+            <h2 class="alert alert-primary text-center" > {{category.title}}  </h2>
+            {% for article in articles %}
+                    <div class="post-preview ">
+                        <a href="{% url 'blog:post' article.slug %}">
+                            <h2 class="post-title">
+                                {{ article.title }}
+                            </h2>
+                            <h3 class="post-subtitle">
+                                {{article.description |striptags| truncatewords:30}}</h3>
+                        </a>
+                        <p class="post-meta alert alert-primary p-1 rounded-3">
+                            منتشر شده توسط:
+                            <a href="{% url 'blog:author' article.author.username %}">{{article.author.get_full_name}}</a>
+                            {{article.publish|naturaltime}}
+                        </p>
+                        <div class="custom">
+                            {% for cat in article.category.active %}
+                                <a href="{% url 'blog:category' cat.slug %}" >#{{cat.title}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+            {% endfor %}
+            <!-- Pager-->
+            <div class="d-flex justify-content-center mb-4">
+                {% if articles.has_previous %}
+                <a class="btn btn-primary text-uppercase mx-3" href="{% url 'blog:category'  category.slug  articles.previous_page_number %}">&rarr; پست های جدید </a>
+                {% endif %}
+                {% if articles.has_next %}
+                <a class="btn btn-primary text-uppercase" href="{% url 'blog:category'  category.slug  articles.next_page_number %}">پست های قدیمی &larr; </a>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

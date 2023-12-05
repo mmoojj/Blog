@@ -1,0 +1,18 @@
+{% load i18n %}
+{% trans "سلام" %} {{receiver}}{% trans "،" %}
+
+{{comment.user}} {% trans "همانطور که یک دیدگاه در اضافه شده است" %} {{ comment.posted }}, {% trans "به" %} {{thread_name}}.
+
+--- {% trans "دیدگاه: " %}: ---
+{{ comment.content }}
+
+http://{{ site.domain }}{{ comment.content_object.get_absolute_url }}
+----------------
+
+
+{% trans "اگر کلیک کردن کار نکرد، می توانید آدرس را نیز در پنجره آدرس مرورگر خود کپی کرده و جایگذاری کنید" %}.
+{% trans "بابت دیدگاهتان متشکرم!" %}
+
+----------------
+{% trans "با احترام،" %}
+{{ site }}

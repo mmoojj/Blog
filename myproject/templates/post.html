@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% load ratings %}
+{% load base_tags %}
+{% block header %} {{article.sumbnail.url}} {% endblock %}
+{% block title %} | {{article.title}}{% endblock %}
+{% block htitle %}
+
+    <h1 class="fs-1" style="text-align: center;">{{article.title}} </h1> 
+    <div >{% ratings article %}</div>
+    <div class="badge bg-primary">بازدیدها:{{article.hits.count}}</div>
+
+
+ {% endblock %}
+{% block main %}
+{% load comment_tags %} 
+<article class="mb-4">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-4 mb-5 " >
+                {% popular_article %}
+                {% popular_rating_article %}
+              </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 ">
+                {% if article.is_spetial %}
+                        {% if user.is_authenticated and user.is_spetial_user or user.is_superuser or user == article.author %}
+                            {{article.description|safe}}
+                          {% else %}
+                            <p>این مقاله ویژه است جهت مشاهده <a href="#">اشتراک ویژه</a> تهیه کنید<p>  
+                        {% endif %}
+                {% else %}
+                        {{article.description|safe}}
+                        
+                {% endif %}
+            </div>
+        </div>
+        <div  class="row" style="padding: 80px;">
+            {% render_comments article request %}  
+            {% include_bootstrap %}
+        </div>
+    </div>
+</article>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "registration/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} 
+{% block page_title %}
+پروفایل کاربری
+{% endblock %}
+{% endblock %}
+
+{% block main %}
+
+<div class="card card-info">
+    <div class="card-header">
+      <h3 class="card-title float-left">پروفایل کاربری</h3>
+    </div>
+    <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+              {{ form.username|as_crispy_field }}
+            </div>
+            <div class="col-12 alert alert-primary">
+              <label>گذرواژه:</label>
+              <p >جهت تغییر گذرواژه <a href="{% url 'password_change' %}"> اینجا</a>  کلیک کنید. </p>
+            </div>
+            <div class="col-6">
+                {{ form.email|as_crispy_field }}
+              </div>
+              <div class="col-6">
+                {{ form.first_name|as_crispy_field }}
+              </div>
+              <div class="col-6">
+                {{ form.last_name|as_crispy_field }}
+              </div>
+              <div class="col-12">
+                {{ form.spetial_user|as_crispy_field }}
+              </div>
+              <div class="col-12">
+                {{ form.is_author|as_crispy_field }}
+              </div>
+        </div>   
+        <button type="submit" class="btn btn-success my-3"> ویرایش</button>
+    </form>
+
+</div>
+</div>
+{% endblock %}

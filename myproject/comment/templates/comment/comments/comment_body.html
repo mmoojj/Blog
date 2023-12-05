@@ -1,0 +1,19 @@
+{% load comment_tags %}
+{% load gravatar %}
+<div class="row">
+    {% comment %} <img src="{% gravatar_url user.email 150 %}" class="img-circle elevation-2" alt="{{user.email}}"> {% endcomment %}
+    {% comment %} {% if has_valid_profile %} {% endcomment %}
+        <div class="{% block image_wrapper_cls %}col-2 col-md-1{% endblock image_wrapper_cls %}">
+            
+                <img class="{% block image_cls %}w-100{% endblock image_cls %}"
+                     src="{% gravatar_url comment.email 150 %}" alt="{% get_username_for_comment comment %}">
+            </a>
+        </div>
+    {% comment %} {% endif %} {% endcomment %}
+    {% include 'comment/comments/comment_content.html' with comment=comment %}
+    {% if comment.user != user %}
+        <div class="{% block three_dots_wrapper_cls %}col-1 position-relative d-flex justify-content-end{% endblock three_dots_wrapper_cls %}">
+            {% include 'comment/comments/three_dots_menu.html' %}
+        </div>
+    {% endif %}
+</div>

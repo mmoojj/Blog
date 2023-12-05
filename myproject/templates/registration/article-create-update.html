@@ -1,0 +1,61 @@
+{% extends "registration/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} 
+{% block page_title %}
+انتشار مقاله
+{% endblock %}
+{% endblock %}
+
+{% block main %}
+
+<div class="card card-info">
+    <div class="card-header">
+      <h3 class="card-title float-left">انتشار مقاله</h3>
+    </div>
+    <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+              {{ form.title|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.slug|as_crispy_field }}
+              </div>
+              <div class="col-6">
+                {{ form.sumbnail|as_crispy_field }}
+              </div>
+              <div class="col-6">
+                {{ form.publish|as_crispy_field }}
+              </div>
+              <div class="col-12">
+                {{ form.description|as_crispy_field }}
+              </div>
+              <div class="col-6 ">
+                <div class="row d-flex justify-content-center align-items-center">
+                  <div class="col-8">
+                    {{ form.category|as_crispy_field }}
+                  </div>
+                  <div class="col-4 ">
+                    <a href="{% url 'account:category_create' %}"  data-popup="yes" ><i  class="fas fa-plus text-bg-primary "> </i></a>
+                  </div>
+                </div>
+              </div>
+              {% if user.is_superuser %}
+              <div class="col-6">
+                {{ form.status|as_crispy_field }}
+                {{ form.author|as_crispy_field }}
+                {{ form.is_spetial|as_crispy_field }}
+              </div>
+              {% endif %}
+        </div>   
+        <button type="submit" class="btn btn-success my-3">ارسال مقاله</button>
+        {% if user.is_superuser and request.resolver_match.kwargs.pk %}
+          <a href="{% url 'account:article_delete' request.resolver_match.kwargs.pk %}"  class="btn btn-danger"  >حذف</a>
+        {% endif %}
+    </form>
+
+</div>
+</div>
+{% endblock %}

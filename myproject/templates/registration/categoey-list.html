@@ -1,0 +1,77 @@
+{% extends "registration/base.html" %}
+{% load fields_tags %}
+{% block title %} 
+{% block page_title %}
+لیست مقالات
+{% endblock %}
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-12 ">
+      <div class="card">
+        
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          {% if object_list %}
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      
+                          
+                          <th>{% verbose_name object_list  "title" %}</th>
+                          <th>{% verbose_name object_list  "slug" %}</th>
+                          
+                          <th>وضعیت</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody >
+                  {% for cat in object_list %}
+                  <tr>
+                     
+                    <td><a href="{% url 'account:category_update' cat.pk %}"> {{cat.title}}</a></td>
+                     <td>{{cat.slug}}</td>
+                     
+                     <td>
+                        {% if cat.status %}
+                               <button class="badge badge-success p-2" id="#{{cat.pk}}" onclick="myfunc('{{cat.pk}}')">  فعال</button>
+                            {% else %}
+                            <button class="badge badge-danger p-2" id="#{{cat.pk}}" onclick="myfunc('{{cat.pk}}')">  غیر فعال</button>
+                        {% endif %}
+                     </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              {% else %}
+              <p class="text text-secondary  text-center" style="font-size:30px;">هنوز هیچ مقاله ای اضافه نشده</p>   
+          {% endif %}
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+  <script type="text/javascript">
+    function myfunc(pk){
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = function(){
+        let btn = document.getElementById("#"+pk)
+        if (this.status==200){
+                if (btn.className=="badge badge-danger p-2"){
+                  btn.className="badge badge-success p-2"
+                  btn.innerText= "فعال"
+                }else{
+                  btn.className="badge badge-danger p-2"
+                  btn.innerText="غیر فعال"
+                }
+        }
+      }
+      xhttp.open('GET',"/account/change/state/" + pk,true)
+      xhttp.send()
+    }
+  </script>
+{% endblock %}
+
+

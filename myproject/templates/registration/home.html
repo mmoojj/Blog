@@ -1,0 +1,90 @@
+{% extends "registration/base.html" %}
+{% load fields_tags %}
+{% block title %} 
+{% block page_title %}
+لیست مقالات
+{% endblock %}
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-12 ">
+      <div class="card">
+        
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          {% if object_list %}
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                          <th>{% verbose_name object_list  "title" %}</th>
+                          <th>{% verbose_name object_list  "author" %}</th>
+                          <th>{% verbose_name object_list  "sumbnail" %}</th>
+                          <th>{% verbose_name object_list  "category" %}</th>
+                          <th>{% verbose_name object_list  "description" %}</th>
+                          <th>{% verbose_name object_list  "publish" %}</th>
+                          <th>{% verbose_name object_list  "status" %}</th> 
+                          <th>{% verbose_name object_list  "is_spetial" %}</th> 
+                          <th>بیشتر</th> 
+                    </tr>
+                  </thead>
+                  <tbody >
+                  {% for article in object_list %}
+                  <tr>
+                      {% if article.author == user and article.status == 'd' or user.is_superuser  %}
+                      <td><a style="font-size:13px;" href="{% url 'account:article_update' article.pk %}" >  {{article.title}}</a></td>
+                      {% else %}
+                      <td style="font-size:13px;">{{article.title}}</td>
+                      {% endif %}
+                      <td>{{article.author.get_full_name}}</td>
+                      <td><img src="{{article.sumbnail.url}}" width="60px" height="60px"/></td>
+                      <td>{{article.category_to_str}}  </td>
+                      <td style="font-size:13px;">{{article.description|striptags|truncatewords:10}}</td>
+                      <td style="font-size:13px;">{{article.get_publish_jalali}}</td>
+                      <td>
+                          {% if article.status == 'p' %}
+                                <span class="badge badge-success p-2">منتشر شده</span>
+                                
+                                {% else %}
+                                <span class="badge badge-warning p-2">پیش نویس</span>
+                          {% endif %}
+                        
+                      </td>
+                      <td>
+                          {% if article.is_spetial %}
+                           <i class="fa fa-check-circle text-success"></i>
+                          {% else %}
+                          <i class="fa fa-minus-circle text-danger"></i>
+                          {% endif %}
+                      </td>
+                      <td>
+                        <div class="dropdown">
+                          <span class="dropbtn">....</span>
+                          <div class="dropdown-content">
+                            {% if article.status == 'd' %}
+                            <a href="{% url 'blog:preview' article.pk %}" class="badge badge-secondary"> پیش نمایش</a>
+                            {% else %}
+                            <a href="{% url 'blog:post' article.slug %}" class="badge badge-primary"> مشاهده</a>
+                            {% endif %}
+                            {% if user.is_superuser %}
+                            <a href="{% url 'account:article_delete' article.pk %}" class="badge badge-danger">  حذف مقاله </a>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              {% else %}
+              <p class="text text-secondary  text-center" style="font-size:30px;">هنوز هیچ مقاله ای اضافه نشده</p>   
+          {% endif %}
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+{% endblock %}
+
+

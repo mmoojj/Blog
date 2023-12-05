@@ -1,0 +1,170 @@
+@font-face {
+    font-family: Sahel;
+    src: url('Sahel.eot');
+    src: url('Sahel.eot?#iefix') format('embedded-opentype'),
+         url('Sahel.woff2') format('woff2'),
+         url('Sahel.woff') format('woff'),
+         url('Sahel.ttf') format('truetype');
+  }
+
+body, h1, h2, h3, h4, h5, h6 , a , .btn{
+    direction: rtl;
+    font-family: "Sahel";
+    text-align: start;
+} 
+
+p{
+    text-align: justify;
+}
+
+@media (min-width: 992px) {
+    .post-preview > a > .post-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .post-preview > a > .post-subtitle {
+    font-weight: 300;
+    margin-bottom: 0.625rem;
+    font-size: 1rem;
+  }  
+
+.custom > a:nth-child(even){
+    color: blueviolet;
+}
+.custom > a:nth-child(odd){
+    color: chocolate;
+}
+
+
+
+
+.nav {
+  list-style: none inside;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.nav li {
+  display: block;
+  position: relative;
+  /* float: right; */
+  /* menu background color */
+}
+
+.nav li a {
+  display: block;
+  padding: 0;
+  text-decoration: none;
+  width: 150px;
+  /* this is the width of the menu items */
+  line-height: 35px;
+  /* this is the hieght of the menu items */
+  color: #ffffff;
+  /* list item font color */
+}
+
+
+
+/* smaller font size for sub menu items */
+
+
+
+/* highlights current hovered list item and the parent list items when hovering over sub menues */
+
+.nav ul {
+  position: absolute;
+  padding: 0;
+  right: 0;
+  display: none;
+  /* hides sublists */
+}
+
+.nav li:hover ul ul {
+  display: none;
+}
+
+/* hides sub-sublists */
+
+.nav li:hover ul {
+  display: block;
+}
+
+/* shows sublist on hover */
+
+.nav li li:hover ul {
+  display: block;
+  /* shows sub-sublist on hover */
+  margin-right: 100px;
+  /* this should be the same width as the parent list item */
+  margin-top: -50px;
+  /* aligns top of sub menu with top of list item */
+}
+
+.popular_article {
+  border: 2px solid #ddd;
+  padding: 20px;
+  width: 300px;
+  /* position: absolute; */
+  /* left: 200px; */
+  text-align: start;
+  border-radius: 3px;
+  box-shadow: 5px 2px 5px;
+  
+}
+
+
+#navbarResponsive {
+  position: absolute;
+  left: 200px;
+
+
+}
+@media (max-width: 990px) {
+#navbarResponsive {
+  position: absolute;
+  left: 200px;
+  top: 20px;
+  right: 10px;
+
+}
+}
+@media (min-width: 992px) {
+  #mainNav {
+    transition: background-color 0.2s;
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    margin-top: 60px;
+  }
+}
+
+
+/* @media (min-width: 1200px) {
+  .popular_article {
+    border: 2px solid #ddd;
+    padding: 20px;
+    width: 300px;
+    position: absolute;
+    left: 10px;
+    border-radius: 3px;
+    box-shadow: 5px 2px 5px;
+    
+  }
+
+}
+@media (max-width: 1200px) {
+  .popular_article {
+    border: 2px solid #ddd;
+    padding: 20px;
+    width: 300px;
+    position: relative;
+    right: 150px;
+    margin-bottom: 100px;
+    border-radius: 3px;
+    box-shadow: 5px 2px 5px;
+    
+  }
+} */
+

@@ -1,0 +1,76 @@
+<!-- Main Content-->
+{% extends "base.html" %}
+{% load ratings %} 
+{% load humanize %}
+{% load static %} 
+
+{% block header%}{% static "/blog/assets/img/home-bg.jpg" %}{% endblock %} 
+{% block htitle %}
+سیلیسیوم 
+{% endblock %}
+{% block main %}
+{% load base_tags %}
+<div class="container-fluid px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-4 " >
+      <form class="form-inline mb-5 " action="{% url 'blog:search' %}">
+        <input class="form-control p-2  d-inline" type="text" name="q" placeholder="جستوجو ..."  style="width:250px">
+        <button class="btn btn-outline-success p-2  " type="submit">جستوجو</button>
+      </form>
+      {% popular_article %}
+      {% popular_rating_article %}
+    </div>
+    <div class="col-md-10 col-lg-6 col-xl-7">
+      <!-- Post preview-->
+      
+
+      {% for article in articles %}
+      <div class="post-preview">
+        {% ratings article %}
+        <a href="{% url 'blog:post' article.slug %}">
+          <h2 class="post-title">{{ article.title }}
+            {% if article.is_spetial %}
+             <spna class="badge bg-danger" >ویژه</span>
+            {% endif %}  
+            </h2>
+          
+          <h3 class="post-subtitle">
+            {{article.description |striptags| truncatewords:30}}
+          </h3>
+        </a>
+        <p class="post-meta alert alert-primary p-1 rounded-3" role="alert">
+          منتشر شده توسط:
+          <a href="{% url 'blog:author' article.author.username %}"
+            >{{article.author.get_full_name}}</a
+          >
+          {{article.publish|naturaltime}}
+        </p>
+        <div class="custom">
+          {% for cat in article.category.active %}
+          <a href="{% url 'blog:category' cat.slug %}">#{{cat.title}}</a>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- Divider-->
+      <hr class="my-4" />
+      {% endfor %}
+      <!-- Pager-->
+      <div class="d-flex justify-content-center mb-4">
+        {% if articles.has_previous %}
+        <a
+          class="btn btn-primary text-uppercase mx-3"
+          href="{% url 'blog:home' articles.previous_page_number %}"
+          >&rarr; پست های جدید
+        </a>
+        {% endif %} {% if articles.has_next %}
+        <a
+          class="btn btn-primary text-uppercase"
+          href="{% url 'blog:home' articles.next_page_number %}"
+          >پست های قدیمی &larr;
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
